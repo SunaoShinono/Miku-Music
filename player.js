@@ -66,10 +66,10 @@ function initializePlayer(client) {
             const attachment = new AttachmentBuilder(cardPath, { name: 'musicard.png' });
             const embed = new EmbedBuilder()
                 .setAuthor({
-                    name: 'Now Playing',
+                    name: 'กำลังเล่นเพลง',
                     iconURL: 'https://cdn.discordapp.com/emojis/838704777436200981.gif' // Replace with actual icon URL
                 })
-                .setDescription('🎶 **Controls:**\n 🔁 `Loop`, ❌ `Disable`, ⏭️ `Skip`, 📜 `Queue`, 🗑️ `Clear`\n ⏹️ `Stop`, ⏸️ `Pause`, ▶️ `Resume`, 🔊 `Vol +`, 🔉 `Vol -`')
+                .setDescription('🎶 **ควบคุมเพลง:**\n 🔁 `วนซ้ำ`, ❌ `ปิดวนซ้ำ`, ⏭️ `ข้ามเพลง`, 📜 `คิวเพลง`, 🗑️ `เคลียร์คิวเพลง`\n ⏹️ `หยุดเพลงและออก`, ⏸️ `หยุดชั่วคราว`, ▶️ `เล่นต่อ`, 🔊 `เพิ่มเสียง`, 🔉 `ลดเสียง`')
                 .setImage('attachment://musicard.png')
                 .setColor('#FF7A00');
 
@@ -154,7 +154,7 @@ function setupCollector(client, player, channel, message) {
         if (!voiceChannel || voiceChannel.id !== playerChannel) {
             const vcEmbed = new EmbedBuilder()
                 .setColor(config.embedColor)
-                .setDescription('🔒 **You need to be in the same voice channel to use the controls!**');
+                .setDescription('🔒 **เหมือนว่านายท่านจะไม่ได้อยู่ห้องเดียวกับ Miku เข้าห้องเสียงก่อน และค่อยใช้คำสั่งอีกครั้งนะคะ**');
             const sentMessage = await channel.send({ embeds: [vcEmbed] });
             setTimeout(() => sentMessage.delete().catch(console.error), config.embedTimeout * 1000);
             return;
@@ -177,7 +177,7 @@ async function handleInteraction(i, player, channel) {
             break;
         case 'skipTrack':
             player.stop();
-            await sendEmbed(channel, "⏭️ **Player will play the next song!**");
+            await sendEmbed(channel, "⏭️ **ค่ะ จะเล่นเพลงต่อไปให้ฟังนะคะ**");
             break;
         case 'disableLoop':
             disableLoop(player, channel);
@@ -187,34 +187,34 @@ async function handleInteraction(i, player, channel) {
             break;
         case 'clearQueue':
             player.queue.clear();
-            await sendEmbed(channel, "🗑️ **Queue has been cleared!**");
+            await sendEmbed(channel, "🗑️ **เคลียร์คิวเรียบร้อยค่ะ**");
             break;
         case 'stopTrack':
             player.stop();
             player.destroy();
-            await sendEmbed(channel, '⏹️ **Playback has been stopped and player destroyed!**');
+            await sendEmbed(channel, '⏹️ **หยุดเล่นแล้วนะคะ งั้นมิกุขอไปพักก่อนนะคะ บายยยยยย**');
             break;
         case 'pauseTrack':
             if (player.paused) {
-                await sendEmbed(channel, '⏸️ **Playback is already paused!**');
+                await sendEmbed(channel, '⏸️ **ก็หยุดแล้วนี่ไง ยังจะกดอีก!!!**');
             } else {
                 player.pause(true);
-                await sendEmbed(channel, '⏸️ **Playback has been paused!**');
+                await sendEmbed(channel, '⏸️ **หยุดเล่นชั่วคราวแล้วนะคะ**');
             }
             break;
         case 'resumeTrack':
             if (!player.paused) {
-                await sendEmbed(channel, '▶️ **Playback is already resumed!**');
+                await sendEmbed(channel, '▶️ **ก็เล่นอยู่นี่ไง เดี๋ยวปั๊ดเหนี่ยวเลยนี่**');
             } else {
                 player.pause(false);
-                await sendEmbed(channel, '▶️ **Playback has been resumed!**');
+                await sendEmbed(channel, '▶️ **เล่นต่อแล้วค่ะ**');
             }
             break;
         case 'volumeUp':
-            adjustVolume(player, channel, 10);
+            adjustVolume(player, channel, 20);
             break;
         case 'volumeDown':
-            adjustVolume(player, channel, -10);
+            adjustVolume(player, channel, -20);
             break;
     }
 }
@@ -228,10 +228,10 @@ async function sendEmbed(channel, message) {
 function adjustVolume(player, channel, amount) {
     const newVolume = Math.min(100, Math.max(10, player.volume + amount));
     if (newVolume === player.volume) {
-        sendEmbed(channel, amount > 0 ? '🔊 **Volume is already at maximum!**' : '🔉 **Volume is already at minimum!**');
+        sendEmbed(channel, amount > 0 ? '🔊 **เร่งเสียงสุดแล้วนะคะ ลำโพงแหก หูฟังพัง Miku จะไม่รับผิดชอบนะคะ**' : '🔉 **ต่ำกว่านี้ ก็ไม่มีมนุษย์คนไหนได้ยินเสียงแล้วค่ะ**');
     } else {
         player.setVolume(newVolume);
-        sendEmbed(channel, `🔊 **Volume changed to ${newVolume}%!**`);
+        sendEmbed(channel, `🔊 **ระดับเสียงปัจจุบันคือ ${newVolume}% ค่ะ**`);
     }
 }
 function formatTrack(track) {
@@ -251,21 +251,21 @@ function formatTrack(track) {
 
 function toggleLoop(player, channel) {
     player.setLoop(player.loop === "track" ? "queue" : "track");
-    sendEmbed(channel, player.loop === "track" ? "🔁 **Track loop is activated!**" : "🔁 **Queue loop is activated!**");
+    sendEmbed(channel, player.loop === "track" ? "🔁 **เปิด Loop เป็นเพลงเดียวแล้วค่ะ**" : "🔁 **เปิด Loop เป็นคิวเพลงแล้วค่ะ**");
 }
 
 function disableLoop(player, channel) {
     player.setLoop("none");
-    sendEmbed(channel, "❌ **Loop is disabled!**");
+    sendEmbed(channel, "❌ **ปิด Loop ทั้งหมดเรียบร้อยค่ะ**");
 }
 
 function showQueue(channel) {
     if (queueNames.length === 0) {
-        sendEmbed(channel, "The queue is empty.");
+        sendEmbed(channel, "กระดาษคิวเพลงอย่างโล่งเลยค่ะ");
         return;
     }
 
-    const nowPlaying = `🎵 **Now Playing:**\n${formatTrack(queueNames[0])}`;
+    const nowPlaying = `🎵 **กำลังเล่น:**\n${formatTrack(queueNames[0])}`;
     const queueChunks = [];
 
     // Split the queue into chunks of 10 songs per embed
@@ -285,7 +285,7 @@ function showQueue(channel) {
     queueChunks.forEach(async (chunk) => {
         const embed = new EmbedBuilder()
             .setColor(config.embedColor)
-            .setDescription(`📜 **Queue:**\n${chunk}`);
+            .setDescription(`📜 **คิวเพลง:**\n${chunk}`);
         await channel.send({ embeds: [embed] }).catch(console.error);
     });
 }
