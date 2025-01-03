@@ -19,7 +19,7 @@ async function skip(client, interaction) {
 
         const embed = new EmbedBuilder()
             .setColor(config.embedColor)
-            .setDescription('**⏭️ Player will play the next song!**');
+            .setDescription('**⏭️ ค่ะ จะเล่นเพลงต่อไปให้ฟังนะคะ**');
 
         await interaction.reply({ embeds: [embed] });
 
@@ -36,7 +36,7 @@ async function skip(client, interaction) {
 
 module.exports = {
     name: "skip",
-    description: "Skip the current song",
+    description: "ข้ามเพลงปัจจุบัน",
     permissions: "0x0000000000000800",
     options: [],
     run: skip
