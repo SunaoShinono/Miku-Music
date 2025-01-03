@@ -33,7 +33,7 @@ async function play(client, interaction) {
             const embed = new EmbedBuilder()
                 .setColor('#ff0000')
                 .setTitle('Voice Channel Required')
-                .setDescription('❌ You need to be in a voice channel to use this command.');
+                .setDescription('❌ นายท่าน ไม่เข้าห้องก่อน แล้ว Miku จะไปอยู่ห้องไหนล่ะคะ เข้าห้องเสียงก่อน แล้วใช้คำสั่งใหม่อีกครั้งนะคะ');
 
             await interaction.reply({ embeds: [embed], ephemeral: true });
             return;
@@ -94,7 +94,7 @@ async function play(client, interaction) {
             const errorEmbed = new EmbedBuilder()
                 .setColor(config.embedColor)
                 .setTitle('Error')
-                .setDescription('❌ No results found.');
+                .setDescription('❌ แง่ะ หาไม่เจอง่ะ นายท่านพิมพ์ผิดหรือเปล่าอะ');
 
             await interaction.editReply({ embeds: [errorEmbed] });
             return;
@@ -103,12 +103,12 @@ async function play(client, interaction) {
         const randomEmbed = new EmbedBuilder()
             .setColor(config.embedColor)
             .setAuthor({
-                name: 'Request Update',
+                name: 'อัพเดทเพลงเรียบร้อยแล้วค่ะ',
                 iconURL: config.CheckmarkIcon,
                 url: config.SupportServer
             })
-            .setDescription('**➡️ Your request has been successfully processed.**\n**➡️ Please use buttons to control playback**')
-            .setFooter({ text: '🎶 Enjoy your music!' });
+            .setDescription('**➡️ คำขอเพลงได้ถูกเพิ่มลงในคิวเพลงเรียบร้อย**\n**➡️ ใช้ปุ่มด้านล่าง เพื่อควบคุมการเล่นเพลง**')
+            .setFooter({ text: '🎶 ขอให้สนุกกับเพลงนะคะ' });
 
         await interaction.followUp({ embeds: [randomEmbed] });
 
@@ -117,7 +117,7 @@ async function play(client, interaction) {
         const errorEmbed = new EmbedBuilder()
             .setColor('#ff0000')
             .setTitle('Error')
-            .setDescription('❌ An error occurred while processing your request.');
+            .setDescription('❌ เอ๊ะ เหมือนว่า Node จะล่มนะคะ ลองติดต่อ [@hatsune_miku_16] เพื่อ Restart Server ที่ Host Miku อยู่ก่อนนะคะ');
 
         if (interaction.deferred || interaction.replied) {
             await interaction.editReply({ embeds: [errorEmbed] });
@@ -129,11 +129,11 @@ async function play(client, interaction) {
 
 module.exports = {
     name: "play",
-    description: "Play a song from a name or link",
+    description: "เล่นเพลง (รองรับ Text Search : Link : Playlist)",
     permissions: "0x0000000000000800",
     options: [{
         name: 'name',
-        description: 'Enter song name / link or playlist',
+        description: 'เล่นเพลง (รองรับ Text Search : Link : Playlist)',
         type: ApplicationCommandOptionType.String,
         required: true
     }],
