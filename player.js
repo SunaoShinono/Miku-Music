@@ -112,7 +112,7 @@ function initializePlayer(client) {
         if (channel && currentTrackMessageId) {
             const queueEmbed = new EmbedBuilder()
                 .setColor(config.embedColor)
-                .setDescription('**Queue Songs ended! Disconnecting Bot!**');
+                .setDescription('**หมดคิวเพลงที่จะเล่นแล้ว งั้น Miku ไปพักก่อนนะคะ**');
             await channel.send({ embeds: [queueEmbed] });
         }
         player.destroy();
