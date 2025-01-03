@@ -1,6 +1,13 @@
 const config = require('./config.js');
 require("./bot.js");
 
+const message = "Miku has online on server.";
+
+setInterval(() => {
+    console.log(message);
+    console.clear(message);
+}, 120000);
+
 /*
 
   ________.__                        _____.___.___________
