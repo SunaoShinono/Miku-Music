@@ -23,7 +23,7 @@ const config = require("../config.js");
 
 module.exports = {
   name: "ping",
-  description: "check the bot latency",
+  description: "เช็กปิงบอท",
   permissions: "0x0000000000000800",
   options: [],
   run: async (client, interaction) => {
@@ -32,12 +32,12 @@ module.exports = {
     try {
 
       const start = Date.now();
-      interaction.reply("Pinging....").then(msg => {
+      interaction.reply("กำลังดึงข้อมูลจาก Shinono Server....").then(msg => {
         const end = Date.now();
         const embed = new EmbedBuilder()
           .setColor(config.embedColor)
-          .setTitle(`Bot Latency`)
-          .setDescription(`**Pong** : ${end - start}ms`)
+          .setTitle(`ความล่าช้าในการตอบสนองของ Miku`)
+          .setDescription(`**Ping** : ${end - start}ms`)
         return interaction.editReply({ embeds: [embed] }).catch(e => { });
       }).catch(err => { })
 
