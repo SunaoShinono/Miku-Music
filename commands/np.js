@@ -22,7 +22,7 @@ async function nowPlaying(client, interaction) {
             const errorEmbed = new EmbedBuilder()
                 .setColor('#ff0000')
                 .setTitle('Error')
-                .setDescription('❌ There is no song currently playing.');
+                .setDescription('❌ ตอนนี้ไม่มีเพลงเล่นอยู่นะ');
 
             await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
             return;
@@ -52,7 +52,7 @@ async function nowPlaying(client, interaction) {
 
 module.exports = {
     name: "np",
-    description: "Displays the currently playing song with a progress bar",
+    description: "แสดงเพลงที่เล่นปัจจุบันพร้อมระยะเวลาที่เล่นอยู่",
     permissions: "0x0000000000000800",
     options: [],
     run: nowPlaying,
